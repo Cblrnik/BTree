@@ -291,10 +291,10 @@ namespace B_Tree
             var pairs = new List<(int, int[])>();
 
             var strings = new List<string>();
-            Temp(_root, pairs, 0);
+            GetAllLevels(_root, pairs, 0);
             for (int i = degree; i >= 0; i--)
             {
-                strings.Insert(0, Temp1(pairs, degree - i));
+                strings.Insert(0, GetStringForCurrentLevel(pairs, degree - i));
             }
 
             for (int i = 0; i < strings.Count; i++)
@@ -306,7 +306,7 @@ namespace B_Tree
             return string.Empty;
         }
 
-        private string Temp1(List<(int, int[])> pairs, int tabsCount)
+        private string GetStringForCurrentLevel(List<(int, int[])> pairs, int tabsCount)
         {
             var list = pairs.Where(x => x.Item1 == degree - tabsCount).Select(x => x.Item2).ToList();
 
@@ -326,7 +326,7 @@ namespace B_Tree
             return output;
         }
 
-        private void Temp(Node node, List<(int,int[])> pairs, int position)
+        private void GetAllLevels(Node node, List<(int,int[])> pairs, int position)
         {
             pairs.Add((position, node.Values.ToArray()));
 
@@ -337,7 +337,7 @@ namespace B_Tree
 
             foreach (var leaf in node.Leaves)
             {
-                Temp(leaf, pairs, position + 1);
+                GetAllLevels(leaf, pairs, position + 1);
             }
         }
     }
