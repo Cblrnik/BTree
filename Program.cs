@@ -7,19 +7,43 @@ namespace B_Tree
     {
         static void Main(string[] args)
         {
-            var tree = new BTree(2);
-            tree.Insert(3);
-            tree.Insert(4);
-            tree.Insert(5);
-            tree.Insert(6);
-            tree.Insert(7);
-            tree.Insert(8);
-            tree.Insert(9);
-            tree.Insert(10);
-            tree.Insert(11);
-            tree.Insert(12);
-            //tree.Search(5);
-            tree.Delete(10);
+            var tree = new BTree(5);
+
+            while (true)
+            {
+                Console.WriteLine("Enter integer for tree:");
+                if (int.TryParse(Console.ReadLine(), out int num))
+                {
+                    tree.Insert(num);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            tree.ToString();
+
+            Console.WriteLine("Enter value to search:");
+            if (int.TryParse(Console.ReadLine(), out int valueToSearch))
+            {
+                Console.WriteLine(tree.Search(valueToSearch));
+            }
+            else
+            {
+                Console.WriteLine("Value is not valid");
+            }
+
+            Console.WriteLine("Enter value to delete:");
+            if (int.TryParse(Console.ReadLine(), out int valueToDelete))
+            {
+                tree.Delete(valueToDelete);
+            }
+            else
+            {
+                Console.WriteLine("Value is not valid");
+            }
+
             tree.ToString();
         }
     }
