@@ -23,12 +23,13 @@ namespace B_Tree
         }
 
         #region Search
-        public int? Search(int key)
+
+        public string Search(int key)
         {
             return SearchInternal(_root, key);
         }
 
-        private int? SearchInternal(Node node, int value)
+        private string SearchInternal(Node node, int value, string pathToValue = "")
         {
             int index = 0;
             for (int i = 0; i < node.Values.Count; i++)
@@ -41,10 +42,13 @@ namespace B_Tree
 
             if (index < node.Values.Count && node.Values[index] == value)
             {
-                return node.Values[index];
+                return pathToValue + node.Values[index];
             }
 
-            return node.IsLeaf ? null : SearchInternal(node.Leaves[index], value);
+            var tempindex = index > 0 ? index - 1 : 0;
+            pathToValue += $"{node.Values[tempindex]} => ";
+
+            return node.IsLeaf ? null : SearchInternal(node.Leaves[index], value, pathToValue);
         }
 
         #endregion
